@@ -4,69 +4,105 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Maze 1</title>
+    <style>
+        #whitespace {
+            display: inline-block;
+            width: 1%;
+        }
+        #block {
+            display: inline-block;
+            width: 1%;
+        }
+    </style>
 </head>
 <body>
+    <div id="form">
+        <input type="text" id="numberInput" required>
+        <input type="submit" value="generate" onclick="generate(this)">
+    </div>
     <div id="main"></div>
 </body>
 <script>
+    function genPola1(length) {
+        let pola1 = [];
+        for (let x = 0; x < length; x++) {
+            if(x === 0) {
+                pola1.push(x);
+            } else {
+                const lastArr = pola1[pola1.length - 1] + 4;
+                pola1.push(lastArr);
+            }
+        }
+        return pola1;
+    }
+    function genPola2(length) {
+        let pola1 = [];
+        for (let x = 0; x < length; x++) {
+            if(x === 1) {
+                pola1.push(x);
+            } else if(x > 1) {
+                const lastArr = pola1[pola1.length - 1] + 2;
+                pola1.push(lastArr);
+            }
+        }
+        return pola1;
+    }
+    function genPola3(length) {
+        let pola1 = [];
+        for (let x = 0; x < length; x++) {
+            if(x === 2) {
+                pola1.push(x);
+            } else if(x > 2) {
+                const lastArr = pola1[pola1.length - 1] + 4;
+                pola1.push(lastArr);
+            }
+        }
+        return pola1;
+    }
     function generateWalls(blocks) {
         let walls = [];
+        const pola1 = genPola1(blocks);
+        const pola2 = genPola2(blocks);
+        const pola3 = genPola3(blocks);
         
         for(let x = 0; x < blocks; x++) {
             let wall = [];
             for(let y = 0; y < blocks; y++) {
-                if(walls.length === 0 && y === 1) { // pola 1
-                    wall[y] = `*`;
-                } else if(walls.length === 1 && y > 0 && y < (blocks - 1)) { // pola 2
-                    wall[y] = `*`;
-                } else if(walls.length === 2 && y === (blocks - 2)) { // pola 3
-                    wall[y] = `*`;
-                } else if(walls.length === 3 && y > 0 && y < (blocks - 1)) { // pola 2
-                    wall[y] = `*`;
-                } else if(walls.length === 4 && y === 1) { // pola 1
-                    wall[y] = `*`;
-                } else if(walls.length === 5 && y > 0 && y < (blocks - 1)) { // pola 2
-                    wall[y] = `*`;
-                } else if(walls.length === 6 && y === (blocks - 2)) { // pola 3
-                    wall[y] = `*`;
-                } else if(walls.length === 7 && y > 0 && y < (blocks - 1)) { // pola 2
-                    wall[y] = `*`;
-                } else if(walls.length === 8 && y === 1) { // pola 1
-                    wall[y] = `*`;
-                } else if(walls.length === 9 && y > 0 && y < (blocks - 1)) { // pola 2 
-                    wall[y] = `*`;
-                } else if(walls.length === 10 && y === (blocks - 2)) { // pola 3
-                    wall[y] = `*`;
-                } else if(walls.length === 11 && y > 0 && y < (blocks - 1)) { // pola 2
-                    wall[y] = `*`;
-                } else if(walls.length === 12 && y === 1) { // pola 1
-                    wall[y] = `*`;
-                } else if(walls.length === 13 && y > 0 && y < (blocks - 1)) { // pola 2
-                    wall[y] = `*`;
-                } else if(walls.length === 14 && y === (blocks - 2)) { // pola 3
-                    wall[y] = ` `;
-                } else wall[y] = `#`;
-                
+                const wallsLength = walls.length;
+                if(pola1.includes(wallsLength) && y === 1) {
+                    wall[y] = `<span id="whitespace"></span>`;
+                } else if(pola2.includes(wallsLength) && y > 0 && y < (blocks - 1)) {
+                    wall[y] = `<span id="whitespace"></span>`;
+                } else if(pola3.includes(wallsLength) && y === (blocks - 2)) {
+                    wall[y] = `<span id="whitespace"></span>`;
+                } else {
+                    wall[y] = `<span id="block">@</span>`;
+                }
             }
             walls[x] = wall;
         }
         return walls;
     }
-
     function generateWays(ways) {
         for (let o = 0; o < ways.length; o++) {
             const element = ways[o].join();
-            console.log(element)
             document.getElementById('main').innerHTML += element.replaceAll(',', '') + '</br>';
-
-            console.log(`${o} ${element}`)
         }
     }
-
-    const blocks = 13;
-    const walls = generateWalls(blocks);
-    const ways = generateWays(walls);
-    // console.log(walls)
+    function generate(el) {
+        const formInput = el.previousElementSibling.value;
+        if(isNaN(formInput)){
+            alert("please working with number");
+            document.getElementById('main').innerHTML = '';
+        } else {
+            document.getElementById('main').innerHTML = '';
+            let blocks = formInput;
+                blocks = (4 * blocks) - 1;
+            const walls = generateWalls(blocks);
+            const ways = generateWays(walls);
+            document.getElementById('numberInput').value = '';
+        }
+    }
 </script>
 </html>
