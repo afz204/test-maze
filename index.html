@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <div id="main"></div>
+</body>
+<script>
+    function generateWalls(blocks) {
+        let walls = [];
+        
+        for(let x = 0; x < blocks; x++) {
+            let wall = [];
+            for(let y = 0; y < blocks; y++) {
+                if(walls.length === 0 && y === 1) { // pola 1
+                    wall[y] = `*`;
+                } else if(walls.length === 1 && y > 0 && y < (blocks - 1)) { // pola 2
+                    wall[y] = `*`;
+                } else if(walls.length === 2 && y === (blocks - 2)) { // pola 3
+                    wall[y] = `*`;
+                } else if(walls.length === 3 && y > 0 && y < (blocks - 1)) { // pola 2
+                    wall[y] = `*`;
+                } else if(walls.length === 4 && y === 1) { // pola 1
+                    wall[y] = `*`;
+                } else if(walls.length === 5 && y > 0 && y < (blocks - 1)) { // pola 2
+                    wall[y] = `*`;
+                } else if(walls.length === 6 && y === (blocks - 2)) { // pola 3
+                    wall[y] = `*`;
+                } else if(walls.length === 7 && y > 0 && y < (blocks - 1)) { // pola 2
+                    wall[y] = `*`;
+                } else if(walls.length === 8 && y === 1) { // pola 1
+                    wall[y] = `*`;
+                } else if(walls.length === 9 && y > 0 && y < (blocks - 1)) { // pola 2 
+                    wall[y] = `*`;
+                } else if(walls.length === 10 && y === (blocks - 2)) { // pola 3
+                    wall[y] = `*`;
+                } else if(walls.length === 11 && y > 0 && y < (blocks - 1)) { // pola 2
+                    wall[y] = `*`;
+                } else if(walls.length === 12 && y === 1) { // pola 1
+                    wall[y] = `*`;
+                } else if(walls.length === 13 && y > 0 && y < (blocks - 1)) { // pola 2
+                    wall[y] = `*`;
+                } else if(walls.length === 14 && y === (blocks - 2)) { // pola 3
+                    wall[y] = ` `;
+                } else wall[y] = `#`;
+                
+            }
+            walls[x] = wall;
+        }
+        return walls;
+    }
+
+    function generateWays(ways) {
+        for (let o = 0; o < ways.length; o++) {
+            const element = ways[o].join();
+            console.log(element)
+            document.getElementById('main').innerHTML += element.replaceAll(',', '') + '</br>';
+
+            console.log(`${o} ${element}`)
+        }
+    }
+
+    const blocks = 13;
+    const walls = generateWalls(blocks);
+    const ways = generateWays(walls);
+    // console.log(walls)
+</script>
+</html>
